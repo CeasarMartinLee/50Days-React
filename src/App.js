@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import store from './store'
 import { Provider } from 'react-redux'
-import { Route, Switch } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 
 import FrontPage from './screens/FrontPage'
 import JoinGame from './screens/JoinGame'

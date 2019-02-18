@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { authenticatePlayer } from '../actions/game'
 import { connect } from 'react-redux'
 import { withRouter  } from 'react-router-dom'
+import WaitingRoom from '../components/WaitingRoom'
 
 class PlayerLobbyContainer extends Component {
 
@@ -31,7 +32,7 @@ class PlayerLobbyContainer extends Component {
     return(
       <div>
         {this.props.player.isConnectedToGame === false && this.redirect()}
-        {this.props.player.isConnectedToGame === true && <div>Im Connected: waiting Room</div>}
+        {this.props.player.isConnectedToGame === true && <WaitingRoom username={this.props.player.username}/>}
         {this.props.player.isConnectedToGame === null && <div>Checking if you are authenticated</div>}
       </div>
     )

@@ -1,5 +1,4 @@
 import axios from 'axios'
-import {HashRouterProps} from 'react-router-dom'
 
 export const JOIN_GAME = 'JOIN_GAME'
 export const JOIN_GAME_FAILED = 'JOIN_GAME_FAILED'

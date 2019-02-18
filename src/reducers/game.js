@@ -10,7 +10,8 @@ export default (state= initialState, action={}) => {
 
   switch(action.type) {
     case JOIN_GAME:
-    return {...state, ...action.payload.game}
+      return {...state, ...action.payload.game}
+    default:
+      return state
   }
-  return state
 }

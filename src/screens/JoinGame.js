@@ -28,6 +28,4 @@ const mapStateToProps = state => {
   }
 }
 
-// JoinGameContainer = withRouter(JoinGameContainer)
-
 export default withRouter(connect(mapStateToProps)(JoinGameContainer))
