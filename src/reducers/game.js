@@ -5,10 +5,6 @@ const initialState = {
   id: null,
   status: null,
   players: [],
-  // currentQuestion: {
-  //   question: null,
-  //   choices: null
-  // }
 }
 export default (state= initialState, action={}) => {
 

@@ -4,11 +4,11 @@ import {HashRouterProps} from 'react-router-dom'
 export const JOIN_GAME = 'JOIN_GAME'
 export const JOIN_GAME_FAILED = 'JOIN_GAME_FAILED'
 
-const joinGame = (id, game) => {
+const joinGame = (player, game) => {
   return {
     type: JOIN_GAME,
     payload: {
-      id,
+      player,
       game
     }
   }
@@ -26,7 +26,7 @@ export const joinPlayerToGame = (username, code) => async (dispatch) => {
     .then((res) => {
       localStorage.setItem('id', res.data.user)
       console.log(res)
-      dispatch(joinGame(res.data.user, res.data.game))
+      dispatch(joinGame(res.data.player, res.data.game))
     })
     .catch((err) => {
       if(err.message.includes('400')) {
@@ -36,4 +36,11 @@ export const joinPlayerToGame = (username, code) => async (dispatch) => {
       }
     })
   
+}
+
+export const authenticatePlayer = (gameId, playerId) => async (dispatch) => {
+  await axios.post('http://localhost:3000/player/authenticate', { gameId, playerId })
+    .then(res => {
+      dispatch(joinGame(res.data.score, res.data.game))
+    }).catch(err =>  dispatch(joinGameFailed('Not authorized')))
 }
