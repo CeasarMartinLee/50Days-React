@@ -5,7 +5,6 @@ import Logo from '../Logo'
 require('./JoinGame.css')
 
 export default () => {
-
   return (
     <div className='join-section'>
       <div id='section__left' className="col-lg-7 col-md-7 col-sm-8 col-xs-12">

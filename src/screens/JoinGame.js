@@ -1,7 +1,16 @@
 import React, { Component } from 'react'
 import JoinGame from '../components/JoinGame'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 
 class JoinGameContainer extends Component {
+
+  componentDidUpdate() {
+    if(this.props.player.isConnectedToGame) {
+      this.props.history.push('/')
+    }
+  }
+
   render() {
     return (
       <div className='container-fluid'>
@@ -11,4 +20,13 @@ class JoinGameContainer extends Component {
   }
 }
 
-export default JoinGameContainer
+const mapStateToProps = state => {
+  console.log(state)
+  return {
+    player: state.player
+  }
+}
+
+// JoinGameContainer = withRouter(JoinGameContainer)
+
+export default withRouter(connect(mapStateToProps)(JoinGameContainer))
