@@ -7,7 +7,7 @@ class JoinGameContainer extends Component {
 
   componentDidUpdate() {
     if(this.props.player.isConnectedToGame) {
-      this.props.history.push('/')
+      this.props.history.push(`/game/${this.props.game.id}/lobby`)
     }
   }
 
@@ -23,7 +23,8 @@ class JoinGameContainer extends Component {
 const mapStateToProps = state => {
   console.log(state)
   return {
-    player: state.player
+    player: state.player,
+    game: state.game
   }
 }
 
