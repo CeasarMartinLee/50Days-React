@@ -20,8 +20,8 @@ class JoinGameContainer extends Component {
   }
 }
 
+
 const mapStateToProps = state => {
-  console.log(state)
   return {
     player: state.player,
     game: state.game
@@ -29,3 +29,4 @@ const mapStateToProps = state => {
 }
 
 export default withRouter(connect(mapStateToProps)(JoinGameContainer))
+

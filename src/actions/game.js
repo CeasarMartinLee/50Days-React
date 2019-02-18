@@ -1,7 +1,27 @@
+import request from 'superagent'
 import axios from 'axios'
 
+export const CREATE_GAME_SUCCESS = 'CREATE_GAME_SUCCESS'
 export const JOIN_GAME = 'JOIN_GAME'
 export const JOIN_GAME_FAILED = 'JOIN_GAME_FAILED'
+
+const baseUrl = 'http://localhost:3000'
+
+const createGameSuccess = game => ({
+    type: CREATE_GAME_SUCCESS,
+    game
+  })
+
+export const createGame = (data) => (dispatch) => {
+  request
+    .post(`${baseUrl}/game`)
+    .send(data)
+    .then(response => {
+        console.log(response)
+      dispatch(createGameSuccess(response.body))
+    })
+    .catch(console.error)
+}
 
 const joinGame = (player, game) => {
   return {
@@ -50,5 +70,3 @@ export const authenticatePlayer = (gameId, playerId) => async (dispatch) => {
       dispatch(joinGame(res.data.score, res.data.game))
     }).catch(err =>  dispatch(joinGameFailed('Not authorized')))
 }
-
-// 
