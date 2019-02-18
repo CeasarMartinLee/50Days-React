@@ -25,10 +25,8 @@ class FrontPage extends Component {
           <div id="login-section__right" className="col-lg-5 col-md-5 col-sm-4 col-xs-2">
             <img src="./img/web-development-png-website-development-company-in-noida-1100.png" alt="front page pic" />
           </div>
-        </div>
-      </div>
+        </div>)
 
-    )
   }
 }
 
