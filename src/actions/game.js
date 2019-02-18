@@ -42,9 +42,13 @@ const saveToLocal = async (id) => {
 
 
 export const authenticatePlayer = (gameId, playerId) => async (dispatch) => {
+  console.log(gameId, playerId)
   await axios.post('http://localhost:3000/player/authenticate', { gameId, playerId })
     .then(res => {
-      saveToLocal(res.data.player.id)
+      // saveToLocal(res.data.player.id)
+      console.log(res)
       dispatch(joinGame(res.data.score, res.data.game))
     }).catch(err =>  dispatch(joinGameFailed('Not authorized')))
 }
+
+// 

@@ -6,11 +6,13 @@ import WaitingRoom from '../components/WaitingRoom'
 
 class PlayerLobbyContainer extends Component {
 
-  async componentDidMount() {
+  componentDidUpdate() {
+    if(this.props.player.isConnectedToGame === false) {
+      this.redirect()
+    }
+  }
 
-    // if(this.props.player.isConnectedToGame === false) {
-    //   this.redirect()
-    // }
+  async componentDidMount() {
 
     if(!this.props.player.id) {
       const playerId = await localStorage.getItem('id')
@@ -19,9 +21,9 @@ class PlayerLobbyContainer extends Component {
       if(!playerId) {
         this.props.history.push('/')
       }
-  
+      
       const gameId = this.props.match.params.id
-      this.props.authenticatePlayer(gameId, playerId)
+      await this.props.authenticatePlayer(gameId, playerId)
     }
   }
 
@@ -29,10 +31,11 @@ class PlayerLobbyContainer extends Component {
     this.props.history.push('/')
   }
 
+  
   render() {
+    
     return(
       <div>
-        {this.props.player.isConnectedToGame === false && this.redirect()}
         {this.props.player.isConnectedToGame === true && <WaitingRoom username={this.props.player.username}/>}
         {this.props.player.isConnectedToGame === null && <div>Checking if you are authenticated</div>}
       </div>
