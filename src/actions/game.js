@@ -23,8 +23,7 @@ const joinGameFailed = (message) => {
 export const joinPlayerToGame = (username, code) => async (dispatch) => {
   await axios.post('http://localhost:3000/game/join', { username, gameCode: code})
     .then((res) => {
-      localStorage.setItem('id', res.data.user)
-      console.log(res)
+      saveToLocal(res.data.player.id)
       dispatch(joinGame(res.data.player, res.data.game))
     })
     .catch((err) => {
@@ -37,9 +36,15 @@ export const joinPlayerToGame = (username, code) => async (dispatch) => {
   
 }
 
+const saveToLocal = async (id) => {
+  await localStorage.setItem('id', id)
+}
+
+
 export const authenticatePlayer = (gameId, playerId) => async (dispatch) => {
   await axios.post('http://localhost:3000/player/authenticate', { gameId, playerId })
     .then(res => {
+      saveToLocal(res.data.player.id)
       dispatch(joinGame(res.data.score, res.data.game))
     }).catch(err =>  dispatch(joinGameFailed('Not authorized')))
 }

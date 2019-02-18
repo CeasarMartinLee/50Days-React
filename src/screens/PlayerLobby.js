@@ -8,12 +8,13 @@ class PlayerLobbyContainer extends Component {
 
   async componentDidMount() {
 
-    if(this.props.player.isConnectedToGame === false) {
-      this.redirect()
-    }
+    // if(this.props.player.isConnectedToGame === false) {
+    //   this.redirect()
+    // }
 
     if(!this.props.player.id) {
       const playerId = await localStorage.getItem('id')
+      console.log('ID', playerId)
 
       if(!playerId) {
         this.props.history.push('/')
