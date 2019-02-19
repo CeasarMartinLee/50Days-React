@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import {createGame} from '../actions/game'
 import {connect} from 'react-redux'
-import StartButton from '../components/bigscreen/StartButton'
 import Players from '../components/Players'
-
+import StartButton from '../components/game/StartButton'
 
 
 class StartGame extends Component {

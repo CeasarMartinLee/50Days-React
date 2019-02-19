@@ -18,7 +18,7 @@ class App extends Component {
           <Route exact path='/' component={FrontPage}/>
           <Route path='/join' component={JoinGame}/>
           <Route path='/startgame' component={StartGame}/>
-          <Route exact path='/game' component={Game}/>
+          <Route exact path='/game/:id' component={Game}/>
           <Route exact path='/game/:id/lobby' component={PlayerLobby}/>
         </Provider>
       </div>
