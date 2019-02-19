@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css?family=Anton');
+
+.logo {
+  width: 100%;
+  margin-bottom: 15%;
+  text-align: center;
+  font-family: 'Anton', serif;
+}
+
+.logo p {
+  font-size: 5rem;
+}

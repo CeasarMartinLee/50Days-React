@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
 import store from './store'
-import FrontPage from './screens/FrontPage'
-import JoinGame from './screens/JoinGame'
-import StartGame from './screens/StartGame'
-import Game from './screens/Game'
 import { Provider } from 'react-redux'
 import { Route } from 'react-router-dom'
+
+import StartGame from './screens/StartGame'
+import Game from './screens/Game'
+import FrontPage from './screens/FrontPage'
+import JoinGame from './screens/JoinGame'
+import PlayerLobby from './screens/PlayerLobby'
 
 class App extends Component {
   render() {
@@ -16,7 +18,8 @@ class App extends Component {
           <Route exact path='/' component={FrontPage}/>
           <Route path='/join' component={JoinGame}/>
           <Route path='/startgame' component={StartGame}/>
-          <Route path='/game' component={Game}/>
+          <Route exact path='/game' component={Game}/>
+          <Route exact path='/game/:id/lobby' component={PlayerLobby}/>
         </Provider>
       </div>
     );

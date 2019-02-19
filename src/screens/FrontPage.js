@@ -4,7 +4,6 @@ import JoinButton from '../components/frontpage/JoinButton'
 import './frontpage.css'
 
 class FrontPage extends Component {
-
   render() {
     return (
       <div className="container-fluid">
@@ -27,8 +26,8 @@ class FrontPage extends Component {
           </div>
         </div>
       </div>
-
     )
+
   }
 }
 
