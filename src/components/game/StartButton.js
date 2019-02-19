@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router'
 import io from 'socket.io-client'
-const socketUrl = 'localhost:3000'
+import { API_URL } from '../../constants'
 class StartButton extends Component {
 
     constructor() {
         super()
-        this.socket = io(socketUrl)
+        this.socket = io(API_URL)
     }
     startGame = () => {
         console.log(this.props, 'STARTGAME')
