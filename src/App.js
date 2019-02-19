@@ -9,6 +9,7 @@ import Game from './screens/Game'
 import FrontPage from './screens/FrontPage'
 import JoinGame from './screens/JoinGame'
 import PlayerLobby from './screens/PlayerLobby'
+import PlayerStation from './screens/PlayerStation';
 
 class App extends Component {
   render() {
@@ -20,6 +21,7 @@ class App extends Component {
           <Route path='/startgame' component={StartGame}/>
           <Route exact path='/game/:id' component={Game}/>
           <Route exact path='/game/:id/lobby' component={PlayerLobby}/>
+          <Route exact path='/game/:id/station' component={PlayerStation}/>
         </Provider>
       </div>
     );
