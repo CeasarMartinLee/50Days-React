@@ -1,6 +1,7 @@
 import React from 'react'
 import Players from '../Players'
 require('./style.css')
+
 export default (props) => {
     return (
       <div id="login" className="row login-section">
@@ -16,7 +17,7 @@ export default (props) => {
           </div>
         </div>
         <div id="login-section__right" className="col-lg-4 col-md-5 col-sm-4 col-xs-2">
-          <Players />
+          <Players game={props.game}/>
         </div>
       </div>
     );
