@@ -10,19 +10,18 @@ class FrontPage extends Component {
 
   constructor(props){
     super(props);
-
-    this.state = {
-        username: '',
-        message: '',
-        messages: []
-    };
-
     this.socket = io('localhost:3000');
 }
 
   sendMessage = () => {
-    this.socket.emit('SEND_MESSAGE', {hello: 'world'});
+    this.socket.emit('SEND_MESSAGE', {hello: 'world'})
+    this.socket.on('RECEIVE', (data) => {
+      console.log('RECEIVED!!', data)
+    })
+    
   }
+
+
   
 
   render() {
