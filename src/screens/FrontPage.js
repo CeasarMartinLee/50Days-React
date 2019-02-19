@@ -3,9 +3,6 @@ import CreateButton from '../components/frontpage/CreateButton'
 import JoinButton from '../components/frontpage/JoinButton'
 import './frontpage.css'
 
-import io from 'socket.io-client'
-import { API_URL } from '../constants'
-
 
 class FrontPage extends Component {
 

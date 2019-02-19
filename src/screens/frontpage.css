@@ -226,7 +226,7 @@ input[type='number'] {
 
 
 
-@media screen and (max-width: 1025px) {
+@media only screen and (max-width: 1025px) {
   #login-section__left {
     padding: 0 5%;
   }
@@ -236,7 +236,7 @@ input[type='number'] {
   }
 }
 
-@media screen and (max-width: 575px) {
+@media only screen and (max-width: 575px) {
 
   #login {
     display: flex; 

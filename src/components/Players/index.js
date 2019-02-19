@@ -6,6 +6,7 @@ import request from 'superagent'
 import { API_URL } from '../../constants'
 
 const baseUrl = API_URL
+console.log('BASE URL =======>', API_URL)
 
 class Players extends Component {
 
