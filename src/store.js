@@ -5,7 +5,7 @@ import ReduxThunk from 'redux-thunk'
 
 let enhancer = undefined;
 
-if(process.env.NODE_ENV === 'production') {
+if(process.env.NODE_ENV === 'development') {
   const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 
   enhancer = compose(
@@ -13,7 +13,7 @@ if(process.env.NODE_ENV === 'production') {
     devTools
   )
 } else {
-  enhancer = compose(ReduxThunk)
+  enhancer = compose(applyMiddleware(ReduxThunk))
 }
 
 const store = createStore(reducer, enhancer)
