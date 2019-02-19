@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getQuestions } from '../actions/questions'
-
 import './frontpage.css'
 
 class Game extends Component {
