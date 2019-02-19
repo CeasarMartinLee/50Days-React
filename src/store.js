@@ -3,7 +3,7 @@ import reducer from './reducers'
 import ReduxThunk from 'redux-thunk'
 
 
-const enhancer = null;
+let enhancer = undefined;
 
 if(process.env.NODE_ENV === 'production') {
   const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
