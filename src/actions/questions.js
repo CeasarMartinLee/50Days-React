@@ -1,8 +1,9 @@
 import request from 'superagent'
+import { API_URL } from '../constants'
 
 export const GET_QUESTIONS_SUCCESS = 'GET_QUESTIONS_SUCCESS'
 
-const baseUrl = 'http://localhost:3000'
+const baseUrl = API_URL
 
 const getQuestionsSuccess = questions => ({
     type: GET_QUESTIONS_SUCCESS,

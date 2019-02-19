@@ -3,9 +3,10 @@ import Player from './Player';
 import { connect } from 'react-redux'
 import io from 'socket.io-client'
 import request from 'superagent'
+import { API_URL } from '../../constants'
 
-const baseUrl = 'http://localhost:3000'
-const socketUrl = 'localhost:3000'
+const baseUrl = API_URL
+
 class Players extends Component {
 
   constructor() {
@@ -14,7 +15,7 @@ class Players extends Component {
       players: []
     }
 
-    this.socket = io(socketUrl)
+    this.socket = io(baseUrl)
 
   }
   async componentDidMount() {

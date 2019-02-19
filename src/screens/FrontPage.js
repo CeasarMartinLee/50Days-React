@@ -4,25 +4,10 @@ import JoinButton from '../components/frontpage/JoinButton'
 import './frontpage.css'
 
 import io from 'socket.io-client'
+import { API_URL } from '../constants'
 
 
 class FrontPage extends Component {
-
-  constructor(props){
-    super(props);
-    this.socket = io('localhost:3000');
-}
-
-  sendMessage = () => {
-    this.socket.emit('SEND_MESSAGE', {hello: 'world'})
-    this.socket.on('RECEIVE', (data) => {
-      console.log('RECEIVED!!', data)
-    })
-    
-  }
-
-
-  
 
   render() {
     return (
@@ -31,7 +16,6 @@ class FrontPage extends Component {
           <div id="login-section__left" className="col-lg-7 col-md-7 col-sm-8 col-xs-10">
             <div className="logo">
               <p>50Days</p>
-              <button onClick={this.sendMessage}>Click Me</button>
             </div>
             <form className="join-form">
               <CreateButton />

@@ -4,13 +4,14 @@ import { connect } from 'react-redux'
 import { withRouter  } from 'react-router-dom'
 import WaitingRoom from '../components/WaitingRoom'
 import io from 'socket.io-client'
-const socketUrl = 'localhost:3000'
+
+import {API_URL } from '../constants'
 
 class PlayerLobbyContainer extends Component {
 
   constructor() {
     super()
-    this.socket = io(socketUrl)
+    this.socket = io(API_URL)
   }
 
   componentDidUpdate() {
@@ -28,14 +29,6 @@ class PlayerLobbyContainer extends Component {
       if(!playerId) {
         this.props.history.push('/')
       }
-
-
-      // const history = this.props.history
-      // const id = this.props.match.params.id
-      // this.socket.on(`GAME_STATUS_CHANGED_${id}`, function(data){
-      //   console.log(history, 'SOCKET GAME STARTED')
-      //   history.push(`/game/${id}/station`)
-      // })
       
       const gameId = this.props.match.params.id
       await this.props.authenticatePlayer(gameId, playerId)
