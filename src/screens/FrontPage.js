@@ -3,7 +3,28 @@ import CreateButton from '../components/frontpage/CreateButton'
 import JoinButton from '../components/frontpage/JoinButton'
 import './frontpage.css'
 
+import io from 'socket.io-client'
+
+
 class FrontPage extends Component {
+
+  constructor(props){
+    super(props);
+
+    this.state = {
+        username: '',
+        message: '',
+        messages: []
+    };
+
+    this.socket = io('localhost:3000');
+}
+
+  sendMessage = () => {
+    this.socket.emit('SEND_MESSAGE', {hello: 'world'});
+  }
+  
+
   render() {
     return (
       <div className="container-fluid">
@@ -11,6 +32,7 @@ class FrontPage extends Component {
           <div id="login-section__left" className="col-lg-7 col-md-7 col-sm-8 col-xs-10">
             <div className="logo">
               <p>50Days</p>
+              <button onClick={this.sendMessage}>Click Me</button>
             </div>
             <form className="join-form">
               <CreateButton />
