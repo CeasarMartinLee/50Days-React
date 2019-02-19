@@ -1,7 +1,35 @@
 import React, { Component } from 'react'
 import Player from './Player';
+import { connect } from 'react-redux'
+import io from 'socket.io-client'
+import request from 'superagent'
 
+const baseUrl = 'http://localhost:3000'
+const socketUrl = 'localhost:3000'
 class Players extends Component {
+
+  constructor() {
+    super()
+    this.state = {
+      players: []
+    }
+
+    this.socket = io(socketUrl)
+
+  }
+  async componentDidMount() {
+
+    const url = `${baseUrl}/game/${this.props.game.id}/players`
+
+    await request.get(url)
+    .then((result) => this.setState({players: result.body}))
+    .catch((err) => console.error(err))
+
+    this.socket.on(`PLAYER_JOINED_${this.props.game.id}`, (result) => {
+      this.setState({ players: [...this.state.players, result.player]})
+    })
+  }
+
   render() {
     return (
         <div className="players">
@@ -9,17 +37,23 @@ class Players extends Component {
             <h3>Players</h3>
           </div>
           <div className="player-list__header-mobile">
-            <h5>35 Players</h5>
+            <h5>{this.state.players.length} Players</h5>
             <button>
               <i className="fas fa-clipboard-list" />
             </button>
           </div>
           <div className="player-list">
-            <Player/>
+            <Player players={this.state.players}/>
           </div>
         </div>
     )
   }
 }
 
-export default Players
+const mapStateToProps = state => {
+  return {
+    game: state.game
+  }
+}
+
+export default connect(mapStateToProps)(Players)
