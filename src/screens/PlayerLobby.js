@@ -36,7 +36,7 @@ class PlayerLobbyContainer extends Component {
     
     return(
       <div>
-        {this.props.player.isConnectedToGame === true && <WaitingRoom username={this.props.player.username}/>}
+        {this.props.player.isConnectedToGame === true && <WaitingRoom game={this.props.game}/>}
         {this.props.player.isConnectedToGame === null && <div>Checking if you are authenticated</div>}
       </div>
     )

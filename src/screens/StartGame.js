@@ -2,14 +2,15 @@ import React, { Component } from 'react'
 import {createGame} from '../actions/game'
 import {connect} from 'react-redux'
 import StartButton from '../components/bigscreen/StartButton'
+import Players from '../components/Players'
 
 
 
 class StartGame extends Component {
 
-    componentDidMount() {
-        this.props.createGame()
-    }
+    // componentDidMount() {
+    //     this.props.createGame()
+    // }
 
     render() {
         console.log(this.props.game, "bigscreen")
@@ -34,7 +35,7 @@ class StartGame extends Component {
                 </div>
               </div>
               <div id="login-section__right" className="col-lg-5 col-md-5 col-sm-4 col-xs-2">
-                <img src="./img/web-development-png-website-development-company-in-noida-1100.png" alt="front page pic" />
+                {this.props.game.id && <Players game={this.props.game}/>}
               </div>
             </div>
           </div>

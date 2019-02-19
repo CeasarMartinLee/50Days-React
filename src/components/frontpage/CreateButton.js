@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router'
+import { connect } from 'react-redux'
+import { createGame } from '../../actions/game'
 
 class CreateButton extends Component {
 
-    createGame = () => {
+    createGame = async () => {
+        await this.props.createGame()
         this.props.history.push('/startgame')
     }
 
@@ -17,4 +20,4 @@ class CreateButton extends Component {
 }
 
 CreateButton = withRouter(CreateButton);
-export default CreateButton
+export default connect(null, {createGame})(CreateButton)

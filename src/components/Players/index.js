@@ -30,6 +30,8 @@ class Players extends Component {
     })
   }
 
+
+
   render() {
     return (
         <div className="players">
@@ -50,10 +52,6 @@ class Players extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    game: state.game
-  }
-}
 
-export default connect(mapStateToProps)(Players)
+
+export default Players

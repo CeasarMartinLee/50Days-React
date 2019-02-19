@@ -28,7 +28,7 @@ class Game extends Component {
           </div>
           <div id="login-section__right" className="col-lg-4 col-md-5 col-sm-4 col-xs-2">
             <div className="rankings">
-              <h1>Final Round</h1>
+              <h1>First Round</h1>
               {/* Current player ranking */}
               <div className="ranking-list__mobile">
                 <div className="player-ranking">
