@@ -1,9 +1,16 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router'
-
+import io from 'socket.io-client'
+const socketUrl = 'localhost:3000'
 class StartButton extends Component {
 
+    constructor() {
+        super()
+        this.socket = io(socketUrl)
+    }
     startGame = () => {
+        console.log(this.props, 'STARTGAME')
+        this.socket.emit('CHANGE_GAME_STATUS', {gameId: this.props.props.id, status:'Started'})
         const code = this.props.props.code
         this.props.history.push('/game/' + code)
     }
