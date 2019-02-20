@@ -12,25 +12,13 @@ class GameStats extends Component {
     request.get(`${API_URL}/games/${this.props.game.id}/stats`).then((result) => {
       this.setState({ scores: result.body })
     })
-
-    // socket.on(`PLAYER_STAT_UPDATE_${this.props.game.id}}`, (playerStat) => {
-    //   console.log(playerStat)
-    //   const players = this.state.scores.map(player => {
-    //     if (player.id === playerStat.playerId) {
-    //       player.currentScore = playerStat.score
-    //     }
-    //     return player
-    //   })
-
-    //   this.setState({ scores: [...players] })
-    // })
-
+    console.log(this.props.game.id, ' GAMESTATS')
   }
-  
+
   render() {
     console.log(this.props.game.id)
-    socket.on(`PLAYER_STATT_UPDATE_${this.props.game.id}}`, function(playerStat) {
-      console.log(playerStat, 'STTTTTTTTT')
+    socket.on(`PLAYER_STAT_UPDATE_${this.props.game.id}`, (playerStat) => {
+      console.log(playerStat, 'playerstat inside socket!!')
       const players = this.state.scores.map(player => {
         if (player.id === playerStat.playerId) {
           player.currentScore = playerStat.score
