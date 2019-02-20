@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import './frontpage.css'
-import io from 'socket.io-client'
-import {API_URL } from '../constants'
+import socket from '../socketio'
 
 class PlayerStation extends Component {
 
@@ -11,15 +10,11 @@ class PlayerStation extends Component {
 		question: null,
 		answer: []
 	}
-
-	constructor() {
-    super()
-    this.socket = io(API_URL)
-	}
 	
 	componentWillMount() {
 		const gameId = this.props.game.id
-		this.socket.on(`CURRENT_QUESTION_${gameId}`, (data) => {
+		
+		socket.on(`CURRENT_QUESTION_${gameId}`, (data) => {
 			this.setState({ question: data.question, questionId: data.id, answer: data.answer})
 		})
 	}
@@ -41,7 +36,7 @@ class PlayerStation extends Component {
                                 <div className="progress-bar" role="progressbar" style={{ width: '10%' }} aria-valuenow={10} aria-valuemin={0} aria-valuemax={100}>10%</div>
                             </div>
                             <div className="question">
-                                {/* <h3>This is a test question ?</h3> */}
+                           
 														</div>
 														{this.state.answer.length > 0 && (
 															<div className="option-list">

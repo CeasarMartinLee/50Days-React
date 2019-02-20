@@ -6,18 +6,14 @@ import StartButton from '../components/game/StartButton'
 
 
 class StartGame extends Component {
-
-    // componentDidMount() {
-    //     this.props.createGame()
-    // }
-
     render() {
-        console.log(this.props.game, "bigscreen")
+
         if (!this.props.game) {
             return (
                 <div> GENERATING CODE</div>
             )
         }
+
         return (
             <div className="container-fluid">
             <div id="login" className="row login-section">
@@ -44,6 +40,6 @@ class StartGame extends Component {
 
 const mapStateToProps = state => ({
     game: state.game
-  })
+})
 
 export default connect(mapStateToProps, {createGame})(StartGame)

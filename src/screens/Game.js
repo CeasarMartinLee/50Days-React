@@ -22,18 +22,12 @@ class Game extends Component {
 	componentWillMount() {
 		const gameId = this.props.game.id
 		this.socket.on(`CURRENT_QUESTION_${gameId}`, (data) => {
-            console.log(data)
 			this.setState({ question: data.question, questionId: data.id, answer: data.answer, activeQuestion: data.activeId})
 		})
 	}
     
-
     componentDidMount() {
         this.socket.emit('GET_CURRENT_QUESTION', {gameId: this.props.game.id})
-    }
-
-    generateQuestion = () => {
-
     }
 
     nextQuestion = () => {
@@ -96,24 +90,7 @@ class Game extends Component {
                                     <span>Alita</span>
                                     <span>3450 points</span>
                                 </div>
-                                <div className="player-ranking">
-                                    <span className="rank-icon">*</span>
-                                    <span>#2</span>
-                                    <span>John</span>
-                                    <span>3450 points</span>
-                                </div>
-                                <div className="player-ranking">
-                                    <span className="rank-icon">*</span>
-                                    <span>#3</span>
-                                    <span>Peter</span>
-                                    <span>3450 points</span>
-                                </div>
-                                <div className="player-ranking">
-                                    <span className="rank-icon">*</span>
-                                    <span>#4</span>
-                                    <span>Peter</span>
-                                    <span>3450 points</span>
-                                </div>
+                               
                             </div>
                         </div>
                     </div>
