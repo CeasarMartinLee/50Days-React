@@ -1,12 +1,32 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import './frontpage.css'
+import socket from '../socketio'
 
 class PlayerStation extends Component {
 
+	state = {
+		questionId: null,
+		question: null,
+		answer: []
+	}
+	
+	componentWillMount() {
+		const gameId = this.props.game.id
+		
+		socket.on(`CURRENT_QUESTION_${gameId}`, (data) => {
+			this.setState({ question: data.question, questionId: data.id, answer: data.answer})
+		})
+	}
 
+	componentDidMount() {
+		console.log(this.props.game)
+	}
 
     render() {
+			const letter = [
+				'A', 'B', 'C', 'D'
+			]
         return (
             <div className="container-fluid">
                 <div id="login" className="row login-section">
@@ -16,14 +36,17 @@ class PlayerStation extends Component {
                                 <div className="progress-bar" role="progressbar" style={{ width: '10%' }} aria-valuenow={10} aria-valuemin={0} aria-valuemax={100}>10%</div>
                             </div>
                             <div className="question">
-                                {/* <h3>This is a test question ?</h3> */}
-                            </div>
-                            <div className="option-list">
-                                <button className="btn btn-lg option-btn option-A">A</button>
-                                <button className="btn btn-lg option-btn option-B">B</button>
-                                <button className="btn btn-lg option-btn option-C">C</button>
-                                <button className="btn btn-lg option-btn option-D">D</button>
-                            </div>
+                           
+														</div>
+														{this.state.answer.length > 0 && (
+															<div className="option-list">
+																
+																{this.state.answer.map((ans, index) => (
+																	<button key={ans.id} className={`btn btn-lg option-btn option-${letter[index]}`}>{letter[index]}{ans.answer}</button>
+																))}
+															</div>
+														)}
+                            
                             <div className="login-footer">
                                 <img src="https://codaisseur.com/assets/webpack-assets/codaisseur-logo-colore1b2f1695e1af08537a8ccb15598cf7f.svg" alt='codaisseur logo'/>
                             </div>
@@ -76,6 +99,10 @@ class PlayerStation extends Component {
     }
 }
 
+const mapStateToProps = state => {
+	return {
+		game: state.game
+	}
+}
 
-
-export default PlayerStation
+export default connect(mapStateToProps)(PlayerStation)

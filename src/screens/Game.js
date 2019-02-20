@@ -1,51 +1,37 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getQuestions } from '../actions/questions'
+import io from 'socket.io-client'
+import {API_URL } from '../constants'
 import './frontpage.css'
 
 class Game extends Component {
 
+    state = {
+		questionId: null,
+		question: null,
+        answer: [],
+        activeQuestion: null
+	}
+
+	constructor() {
+        super()
+        this.socket = io(API_URL)
+	}
+	
+	componentWillMount() {
+		const gameId = this.props.game.id
+		this.socket.on(`CURRENT_QUESTION_${gameId}`, (data) => {
+			this.setState({ question: data.question, questionId: data.id, answer: data.answer, activeQuestion: data.activeId})
+		})
+	}
+    
     componentDidMount() {
-        this.props.getQuestions()
-        setTimeout(() => this.generateQuestion(), 1000)
+        this.socket.emit('GET_CURRENT_QUESTION', {gameId: this.props.game.id})
     }
 
-    generateQuestion = () => {
-
-        const allQuestions = this.props.game.question
-
-        const activeQuestions = allQuestions
-            .map((a) => ({ sort: Math.random(), value: a }))
-            .sort((a, b) => a.sort - b.sort)
-            .map((a) => a.value)
-            .slice(0, 30)
-        console.log(activeQuestions)
-
-        const currentQuestion = activeQuestions.shift()
-        currentQuestion.answer = currentQuestion.answer
-            .map((a) => ({ sort: Math.random(), value: a }))
-            .sort((a, b) => a.sort - b.sort)
-            .map((a) => a.value)
-        console.log(currentQuestion)
-
-        this.setState({
-            activeQuestions,
-            currentQuestion
-        })
-
-    }
-
-    nextQuestion = (activeQuestions) => {
-        // const activeQuestions = this.state.active.Questions
-        console.log(activeQuestions)
-
-        const currentQuestion = activeQuestions.shift()
-        this.setState({
-            activeQuestions,
-            currentQuestion
-        })
-        console.log(currentQuestion)
-
+    nextQuestion = () => {
+        this.socket.emit('NEXT_QUESTION', {gameId: this.props.game.id, activeQuestionId: this.state.activeQuestion})
     }
 
     render() {
@@ -54,8 +40,6 @@ class Game extends Component {
                 <div>Loading..</div>
             )
         }
-        console.log(this.state)
-        console.log(this.props)
         return (
             <div className="container-fluid">
                 <div id="login" className="row login-section">
@@ -65,16 +49,21 @@ class Game extends Component {
                                 <div className="progress-bar" role="progressbar" style={{ width: '10%' }} aria-valuenow={10} aria-valuemin={0} aria-valuemax={100}>10%</div>
                             </div>
                             <div className="question">
-                                <h3>{this.state.currentQuestion.question}</h3>
+                                <h3>{this.state.question}</h3>
                             </div>
                             <div className="option-list">
-                                <button className="btn btn-lg option-btn option-A">{this.state.currentQuestion.answer[0].answer}</button>
-                                <button className="btn btn-lg option-btn option-B">{this.state.currentQuestion.answer[1].answer}</button>
-                                <button className="btn btn-lg option-btn option-C">{this.state.currentQuestion.answer[2].answer}</button>
-                                <button className="btn btn-lg option-btn option-D">{this.state.currentQuestion.answer[3].answer}</button>
+                                {this.state.answer.length > 0 && (
+                                    <div>
+                                        <button className="btn btn-lg option-btn option-A">{this.state.answer[0].answer}</button>
+                                        <button className="btn btn-lg option-btn option-B">{this.state.answer[1].answer}</button>
+                                        <button className="btn btn-lg option-btn option-C">{this.state.answer[2].answer}</button>
+                                        <button className="btn btn-lg option-btn option-D">{this.state.answer[3].answer}</button>
+                                    </div>
+                                )}
+                                
                             </div>
                             <div>
-                                <br/><button onClick={()=>this.nextQuestion(this.state.activeQuestions)}>NEXT</button>
+                                <br/><button onClick={this.nextQuestion}>NEXT</button>
                             </div>
                             {/* <div className="login-footer">
                                 <img src="https://codaisseur.com/assets/webpack-assets/codaisseur-logo-colore1b2f1695e1af08537a8ccb15598cf7f.svg" alt="codaisseur logo" />
@@ -101,24 +90,7 @@ class Game extends Component {
                                     <span>Alita</span>
                                     <span>3450 points</span>
                                 </div>
-                                <div className="player-ranking">
-                                    <span className="rank-icon">*</span>
-                                    <span>#2</span>
-                                    <span>John</span>
-                                    <span>3450 points</span>
-                                </div>
-                                <div className="player-ranking">
-                                    <span className="rank-icon">*</span>
-                                    <span>#3</span>
-                                    <span>Peter</span>
-                                    <span>3450 points</span>
-                                </div>
-                                <div className="player-ranking">
-                                    <span className="rank-icon">*</span>
-                                    <span>#4</span>
-                                    <span>Peter</span>
-                                    <span>3450 points</span>
-                                </div>
+                               
                             </div>
                         </div>
                     </div>
@@ -130,7 +102,7 @@ class Game extends Component {
 }
 
 const mapStateToProps = state => ({
-    game: state.questions
+    game: state.game
 })
 
 export default connect(mapStateToProps, { getQuestions })(Game)
