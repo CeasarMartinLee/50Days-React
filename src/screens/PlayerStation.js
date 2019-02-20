@@ -20,7 +20,6 @@ class PlayerStation extends Component {
 	componentWillMount() {
 		const gameId = this.props.game.id
 		this.socket.on(`CURRENT_QUESTION_${gameId}`, (data) => {
-			console.log(data, '<====== DATA')
 			this.setState({ question: data.question, questionId: data.id, answer: data.answer})
 		})
 	}
@@ -48,7 +47,7 @@ class PlayerStation extends Component {
 															<div className="option-list">
 																
 																{this.state.answer.map((ans, index) => (
-																	<button key={ans.id} className={`btn btn-lg option-btn option-${letter[index]}`}>{letter[index]}</button>
+																	<button key={ans.id} className={`btn btn-lg option-btn option-${letter[index]}`}>{letter[index]}{ans.answer}</button>
 																))}
 															</div>
 														)}

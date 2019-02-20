@@ -10,7 +10,8 @@ class Game extends Component {
     state = {
 		questionId: null,
 		question: null,
-		answer: []
+        answer: [],
+        activeQuestion: null
 	}
 
 	constructor() {
@@ -21,7 +22,8 @@ class Game extends Component {
 	componentWillMount() {
 		const gameId = this.props.game.id
 		this.socket.on(`CURRENT_QUESTION_${gameId}`, (data) => {
-			this.setState({ question: data.question, questionId: data.id, answer: data.answer})
+            console.log(data)
+			this.setState({ question: data.question, questionId: data.id, answer: data.answer, activeQuestion: data.activeId})
 		})
 	}
     
@@ -35,7 +37,7 @@ class Game extends Component {
     }
 
     nextQuestion = () => {
-        this.socket.emit('NEXT_QUESTION', {gameId: this.props.game.id})
+        this.socket.emit('NEXT_QUESTION', {gameId: this.props.game.id, activeQuestionId: this.state.activeQuestion})
     }
 
     render() {
