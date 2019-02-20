@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import Player from './Player';
-import { connect } from 'react-redux'
-import io from 'socket.io-client'
+import Player from './Player'
 import request from 'superagent'
+import socket from '../../socketio'
 import { API_URL } from '../../constants'
 
 const baseUrl = API_URL
@@ -10,15 +9,10 @@ console.log('BASE URL =======>', API_URL)
 
 class Players extends Component {
 
-  constructor() {
-    super()
-    this.state = {
-      players: []
-    }
-
-    this.socket = io(baseUrl)
-
+  state = {
+    players: []
   }
+
   async componentDidMount() {
 
     const url = `${baseUrl}/game/${this.props.game.id}/players`
@@ -27,12 +21,10 @@ class Players extends Component {
     .then((result) => this.setState({players: result.body}))
     .catch((err) => console.error(err))
 
-    this.socket.on(`PLAYER_JOINED_${this.props.game.id}`, (result) => {
+    socket.on(`PLAYER_JOINED_${this.props.game.id}`, (result) => {
       this.setState({ players: [...this.state.players, result.player]})
     })
   }
-
-
 
   render() {
     return (
@@ -53,7 +45,5 @@ class Players extends Component {
     )
   }
 }
-
-
 
 export default Players

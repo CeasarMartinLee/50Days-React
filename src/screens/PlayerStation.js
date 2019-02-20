@@ -8,25 +8,36 @@ class PlayerStation extends Component {
 	state = {
 		questionId: null,
 		question: null,
-		answer: []
+        answer: [],
+        activeQuestion: null,
+        waitingForOtherPlayers: false
 	}
 	
 	componentWillMount() {
 		const gameId = this.props.game.id
 		
 		socket.on(`CURRENT_QUESTION_${gameId}`, (data) => {
-			this.setState({ question: data.question, questionId: data.id, answer: data.answer})
+			this.setState({ question: data.question, questionId: data.id, answer: data.answer, activeQuestion: data.activeId, waitingForOtherPlayers: false})
 		})
-	}
+    }
+    
+    onSelect = (answerId) => {
+        const answer = this.state.answer.find((ans) => ans.id === answerId)
 
-	componentDidMount() {
-		console.log(this.props.game)
-	}
+        if(!answer.isCorrect) {
+            alert('WRONG!')
+        } else {
+            alert('CORRECT')
+        }
+
+        this.setState({ waitingForOtherPlayers: true})
+        socket.emit('SUBMIT_PLAYER_ANSWER', { playerId: this.props.player.id, activeQuestionId: this.state.activeQuestion, answerId: answerId, isCorrect: answer.isCorrect, timestamp: new Date().getTime(), gameId: this.props.game.id})
+    }
 
     render() {
-			const letter = [
-				'A', 'B', 'C', 'D'
-			]
+        const letter = [
+            'A', 'B', 'C', 'D'
+        ]
         return (
             <div className="container-fluid">
                 <div id="login" className="row login-section">
@@ -37,15 +48,15 @@ class PlayerStation extends Component {
                             </div>
                             <div className="question">
                            
-														</div>
-														{this.state.answer.length > 0 && (
-															<div className="option-list">
-																
-																{this.state.answer.map((ans, index) => (
-																	<button key={ans.id} className={`btn btn-lg option-btn option-${letter[index]}`}>{letter[index]}{ans.answer}</button>
-																))}
-															</div>
-														)}
+                            </div>
+                            {this.state.answer.length > 0 && (
+                                <div className="option-list">
+                                    
+                                    {this.state.answer.map((ans, index) => (
+                                        <button disabled={this.state.waitingForOtherPlayers === true ? true: false} onClick={() => this.onSelect(ans.id)} key={ans.id} className={`btn btn-lg option-btn option-${letter[index]}`}>{letter[index]}{ans.answer}</button>
+                                    ))}
+                                </div>
+                            )}
                             
                             <div className="login-footer">
                                 <img src="https://codaisseur.com/assets/webpack-assets/codaisseur-logo-colore1b2f1695e1af08537a8ccb15598cf7f.svg" alt='codaisseur logo'/>
@@ -72,24 +83,6 @@ class PlayerStation extends Component {
                                     <span>Alita</span>
                                     <span>3450 points</span>
                                 </div>
-                                <div className="player-ranking">
-                                    <span className="rank-icon"></span>
-                                    <span>#2</span>
-                                    <span>John</span>
-                                    <span>3450 points</span>
-                                </div>
-                                <div className="player-ranking">
-                                    <span className="rank-icon"></span>
-                                    <span>#3</span>
-                                    <span>Peter</span>
-                                    <span>3450 points</span>
-                                </div>
-                                <div className="player-ranking">
-                                    <span className="rank-icon"></span>
-                                    <span>#4</span>
-                                    <span>Peter</span>
-                                    <span>3450 points</span>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -100,8 +93,10 @@ class PlayerStation extends Component {
 }
 
 const mapStateToProps = state => {
+    console.log(state)
 	return {
-		game: state.game
+        game: state.game,
+        player: state.player
 	}
 }
 
