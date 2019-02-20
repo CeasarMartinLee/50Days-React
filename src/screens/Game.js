@@ -1,16 +1,26 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getQuestions } from '../actions/questions'
+import io from 'socket.io-client'
+import {API_URL } from '../constants'
 import './frontpage.css'
 
 class Game extends Component {
 
+    constructor() {
+        super()
+        this.socket = io(API_URL)
+    }
+
     componentDidMount() {
         this.props.getQuestions()
-        setTimeout(() => this.generateQuestion(), 1000)
+        this.socket.emit('GET_CURRENT_QUESTION', {gameId: this.props.game.id})
+        // setTimeout(() => this.generateQuestion(), 1000)
     }
 
     generateQuestion = () => {
+
+
 
         const allQuestions = this.props.game.question
 
@@ -130,7 +140,7 @@ class Game extends Component {
 }
 
 const mapStateToProps = state => ({
-    game: state.questions
+    game: state.game
 })
 
 export default connect(mapStateToProps, { getQuestions })(Game)

@@ -10,7 +10,6 @@ class StartButton extends Component {
     }
     startGame = async () => {
         console.log(this.props, 'STARTGAME')
-        this.socket.emit('GET_CURRENT_QUESTION', {gameId: this.props.props.id})
         await this.socket.emit('CHANGE_GAME_STATUS', {gameId: this.props.props.id, status:'Started'})
  
         const id = this.props.props.id

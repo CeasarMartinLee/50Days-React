@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { withRouter  } from 'react-router-dom'
 import WaitingRoom from '../components/WaitingRoom'
 import io from 'socket.io-client'
-
 import {API_URL } from '../constants'
 
 class PlayerLobbyContainer extends Component {
