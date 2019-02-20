@@ -2,7 +2,6 @@ import React from 'react'
 
 export default (props) => {
   const { index, username, currentScore } = props
-  console.log(props, '<<<<<<PROPSSS')
   return(
     <div className="ranking-list__mobile">
         <div className="player-ranking">

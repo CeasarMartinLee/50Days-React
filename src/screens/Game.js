@@ -36,6 +36,10 @@ class Game extends Component {
     }
 
     render() {
+        this.socket.on(`WINNER_${this.props.game.id}`, (winner) => {
+            console.log('THERE IS A WINNER', winner)
+        })
+        
         if (!this.state) {
             return (
                 <div>Loading..</div>
