@@ -6,25 +6,45 @@ import socket from '../../socketio'
 class GameStats extends Component {
   
   state = {
-    stats: []
+    scores: []
   }
   componentDidMount() {
     request.get(`${API_URL}/games/${this.props.game.id}/stats`).then((result) => {
-      this.setState({ stats: result.body })
+      this.setState({ scores: result.body })
     })
 
-    socket.on(`GAME_STATS_CHANGED_${this.props.game.id}`, (playerStat) => {
+    // socket.on(`PLAYER_STAT_UPDATE_${this.props.game.id}}`, (playerStat) => {
+    //   console.log(playerStat)
+    //   const players = this.state.scores.map(player => {
+    //     if (player.id === playerStat.playerId) {
+    //       player.currentScore = playerStat.score
+    //     }
+    //     return player
+    //   })
 
-    })
+    //   this.setState({ scores: [...players] })
+    // })
 
   }
   
   render() {
+    console.log(this.props.game.id)
+    socket.on(`PLAYER_STATT_UPDATE_${this.props.game.id}}`, function(playerStat) {
+      console.log(playerStat, 'STTTTTTTTT')
+      const players = this.state.scores.map(player => {
+        if (player.id === playerStat.playerId) {
+          player.currentScore = playerStat.score
+        }
+        return player
+      })
+
+      this.setState({ scores: [...players] })
+    })
     return(
       <div className="rankings">
           <h1>1st Round</h1>
           <div className="rankings-list">
-            {this.state.stats.length > 0 && this.state.stats.map((stat, index) => <Score key={stat.id} index={index} {...stat} />)}
+            {this.state.scores.length > 0 && this.state.scores.map((score, index) => <Score key={score.id} index={index} {...score} />)}
           </div>
       </div>
     )
