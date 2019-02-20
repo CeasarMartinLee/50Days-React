@@ -18,7 +18,7 @@ export const createGame = (data) => (dispatch) => {
     .post(`${baseUrl}/game`)
     .send(data)
     .then(response => {
-        console.log(response)
+        console.log(response, 'CREATE GAME')
       dispatch(createGameSuccess(response.body))
     })
     .catch(console.error)
