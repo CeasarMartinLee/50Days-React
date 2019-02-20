@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import './frontpage.css'
 import socket from '../socketio'
+import GameStats from '../components/GameStats';
 
 class PlayerStation extends Component {
 
@@ -64,27 +65,7 @@ class PlayerStation extends Component {
                         </div>
                     </div>
                     <div id="login-section__right" className="col-lg-4 col-md-5 col-sm-4 col-xs-2">
-                        <div className="rankings">
-                            <h1>Final Round</h1>
-                            {/* Current player ranking */}
-                            <div className="ranking-list__mobile">
-                                <div className="player-ranking">
-                                    <span className="rank-icon"></span>
-                                    <span>#1</span>
-                                    <span>Alita</span>
-                                    <span>3450 points</span>
-                                </div>
-                            </div>
-                            {/* All players including current player */}
-                            <div className="rankings-list">
-                                <div className="player-ranking">
-                                    <span className="rank-icon"></span>
-                                    <span>#1</span>
-                                    <span>Alita</span>
-                                    <span>3450 points</span>
-                                </div>
-                            </div>
-                        </div>
+                        <GameStats game={this.props.game}/>
                     </div>
                 </div>
             </div>

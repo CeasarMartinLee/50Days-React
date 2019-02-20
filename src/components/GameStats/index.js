@@ -6,31 +6,34 @@ import socket from '../../socketio'
 class GameStats extends Component {
   
   state = {
-    scores: []
+    scores: [],
+    level: null
   }
   componentDidMount() {
     request.get(`${API_URL}/games/${this.props.game.id}/stats`).then((result) => {
-      this.setState({ scores: result.body })
+      this.setState({ scores: result.body, level: this.props.game.level })
     })
-    console.log(this.props.game.id, ' GAMESTATS')
   }
 
   render() {
-    console.log(this.props.game.id)
+    socket.on(`GAME_LEVEL_UP_${this.props.game.id}`, (level) => {
+      this.setState({ level })
+    })
+
     socket.on(`PLAYER_STAT_UPDATE_${this.props.game.id}`, (playerStat) => {
-      console.log(playerStat, 'playerstat inside socket!!')
-      const players = this.state.scores.map(player => {
+      let players = this.state.scores.map(player => {
         if (player.id === playerStat.playerId) {
           player.currentScore = playerStat.score
         }
         return player
       })
 
-      this.setState({ scores: [...players] })
+      const sortedPlayer = players.sort((a, b) => b.currentScore - a.currentScore)
+      this.setState({ scores: [...sortedPlayer] })
     })
     return(
       <div className="rankings">
-          <h1>1st Round</h1>
+          <h1>Round {this.state.level && this.state.level}</h1>
           <div className="rankings-list">
             {this.state.scores.length > 0 && this.state.scores.map((score, index) => <Score key={score.id} index={index} {...score} />)}
           </div>
