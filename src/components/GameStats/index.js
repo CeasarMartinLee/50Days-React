@@ -9,13 +9,11 @@ class GameStats extends Component {
     stats: []
   }
   componentDidMount() {
-    // fetch the stats of the game
     request.get(`${API_URL}/games/${this.props.game.id}/stats`).then((result) => {
-      console.log(result.body)
       this.setState({ stats: result.body })
     })
 
-    socket.on(`GAME_STATS_CHANGED_${this.props.game.id}`, () => {
+    socket.on(`GAME_STATS_CHANGED_${this.props.game.id}`, (playerStat) => {
 
     })
 
