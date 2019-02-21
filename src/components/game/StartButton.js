@@ -1,18 +1,13 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router'
-import io from 'socket.io-client'
-import { API_URL } from '../../constants'
-class StartButton extends Component {
+import socket from '../../socketio'
 
-    constructor() {
-        super()
-        this.socket = io(API_URL)
-    }
-    startGame = () => {
-        console.log(this.props, 'STARTGAME')
-        this.socket.emit('CHANGE_GAME_STATUS', {gameId: this.props.props.id, status:'Started'})
-        const code = this.props.props.code
-        this.props.history.push('/game/' + code)
+class StartButton extends Component {
+    startGame = async () => {
+        await socket.emit('CHANGE_GAME_STATUS', {gameId: this.props.props.id, status:'Started'})
+
+        const id = this.props.props.id
+        this.props.history.push(`/game/${id}`)
     }
 
     render() {
