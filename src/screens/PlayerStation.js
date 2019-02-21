@@ -44,6 +44,14 @@ class PlayerStation extends Component {
             }
         })
 
+        socket.on(`WINNER_${this.props.game.id}`, (data) => {
+            if(data.winner.id !== this.props.player.id) {
+                this.props.history.push('/game-over')
+            } else {
+                this.props.history.push(`/player/winner/${data.winner.username}`)
+            }
+        })
+
         const letter = [
             'A', 'B', 'C', 'D'
         ]
