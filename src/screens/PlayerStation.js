@@ -11,7 +11,9 @@ class PlayerStation extends Component {
 		question: null,
         answer: [],
         activeQuestion: null,
-        waitingForOtherPlayers: false
+        waitingForOtherPlayers: false,
+        isAnswerCorrect: false,
+        correctAnswer: ''
 	}
 	
 	componentWillMount() {
@@ -24,20 +26,31 @@ class PlayerStation extends Component {
     
     onSelect = (answerId) => {
         const answer = this.state.answer.find((ans) => ans.id === answerId)
+        const correctAnswer = this.state.answer.findIndex((ans)=> ans.isCorrect === true)
 
-        if(!answer.isCorrect) {
-            alert('WRONG!')
-        } else {
-            alert('CORRECT')
-        }
-
-        this.setState({ waitingForOtherPlayers: true})
+        this.setState({ waitingForOtherPlayers: true, isAnswerCorrect: answer.isCorrect, correctAnswer})
         socket.emit('SUBMIT_PLAYER_ANSWER', { playerId: this.props.player.id, activeQuestionId: this.state.activeQuestion, answerId: answerId, isCorrect: answer.isCorrect, timestamp: new Date().getTime(), gameId: this.props.game.id})
     }
 
     render() {
         const letter = [
             'A', 'B', 'C', 'D'
+        ]
+
+        const winGif = [
+            '<iframe src="https://giphy.com/embed/nqi89GMgyT3va" width="428" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/nqi89GMgyT3va">via GIPHY</a></p>',
+            '<iframe src="https://giphy.com/embed/5oGIdt1xapQ76" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/happy-excited-5oGIdt1xapQ76">via GIPHY</a></p>',
+            '<iframe src="https://giphy.com/embed/6AachtBbwRYm4" width="480" height="410" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/win-6AachtBbwRYm4">via GIPHY</a></p>',
+            '<iframe src="https://giphy.com/embed/zEJRrMkDvRe5G" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/win-zEJRrMkDvRe5G">via GIPHY</a></p>',
+            '<iframe src="https://giphy.com/embed/xbkMY5GeLGZG0" width="480" height="320" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/dance-winner-xbkMY5GeLGZG0">via GIPHY</a></p>'
+        ]
+
+        const lostGif = [
+            '<iframe src="https://giphy.com/embed/l3vR3gvEdsdJl26oU" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/bretteldredge-brett-eldredge-l3vR3gvEdsdJl26oU">via GIPHY</a></p>',
+            '<iframe src="https://giphy.com/embed/3o7TKr3nzbh5WgCFxe" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/playboyfragrances-3o7TKr3nzbh5WgCFxe">via GIPHY</a></p>',
+            '<iframe src="https://giphy.com/embed/8AdlIamKVYo084YL4H" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/wow-beach-usa-8AdlIamKVYo084YL4H">via GIPHY</a></p>',
+            '<iframe src="https://giphy.com/embed/7FgYDJAbeIkUZ4tg2d" width="480" height="269" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/aceventura-jimcarrey-whennaturecalls-shikaka-7FgYDJAbeIkUZ4tg2d">via GIPHY</a></p>',
+
         ]
         return (
             <div className="container-fluid">
@@ -47,10 +60,18 @@ class PlayerStation extends Component {
                             <div className="progress">
                                 <div className="progress-bar" role="progressbar" style={{ width: '10%' }} aria-valuenow={10} aria-valuemin={0} aria-valuemax={100}>10%</div>
                             </div>
-                            <div className="question">
+                            {this.state.waitingForOtherPlayers &&  
+                                <div className="answer-gifs">
+                                    {this.state.isAnswerCorrect && <div>
+                                        <div dangerouslySetInnerHTML={{ __html: winGif[Math.floor(Math.random() * (winGif.length + 1))] }} />
+                                        <p>The correct answer is  {letter[this.state.correctAnswer]}</p>
+                                    </div>
+                                    }
+                                    {!this.state.isAnswerCorrect && <div dangerouslySetInnerHTML={{ __html: lostGif[Math.floor(Math.random() * (lostGif.length + 1))] }} />}
+                                </div>
+                            }
                            
-                            </div>
-                            {this.state.answer.length > 0 && (
+                            {(this.state.answer.length > 0 && !this.state.waitingForOtherPlayers) && (
                                 <div className="option-list">
                                     
                                     {this.state.answer.map((ans, index) => (
