@@ -15,6 +15,7 @@ class Players extends Component {
 
   componentWillUnmount() {
     socket.disconnect()
+    
   }
 
   async componentDidMount() {

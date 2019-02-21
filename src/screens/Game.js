@@ -5,7 +5,8 @@ import './frontpage.css'
 import GameStats from '../components/GameStats';
 import Timer from '../components/timer/timer';
 import { withRouter } from 'react-router-dom'
-import socket from '../socketio'
+import io from 'socket.io-client'
+import { API_URL } from '../constants'
 
 class Game extends Component {
 
@@ -14,18 +15,28 @@ class Game extends Component {
 		question: null,
         answer: [],
         activeQuestion: null,
-        timer: 20
-	}
+        timer: 10,
+        winner: false
+    }
+    
+    constructor() {
+        super()
+        this.socket = io(API_URL)
+    }
+
+
+
 	
 	componentWillMount() {
 		const gameId = this.props.game.id
-		socket.on(`CURRENT_QUESTION_${gameId}`, (data) => {
+		this.socket.on(`CURRENT_QUESTION_${gameId}`, (data) => {
+            console.log('IM HERE')
 			this.setState({ question: data.question, questionId: data.id, answer: data.answer, activeQuestion: data.activeId})
 		})
 	}
     
     componentWillUnmount() {
-        socket.disconnect()
+        this.socket.disconnect()
     }
     
     componentDidMount() {
@@ -36,29 +47,36 @@ class Game extends Component {
     nextQuestion = () => {
         this.socket.emit('NEXT_QUESTION', {gameId: this.props.game.id, activeQuestionId: this.state.activeQuestion})
         this.setState({ 
-            timer: 20
+            timer: 10
         })
         setTimeout (() => {this.startCountDown()}, 2000)
     }
 
     startCountDown = () => {
-        const start = setInterval(() => {
-            let time = this.state.timer
-            time = time - 1
-            this.setState({ 
-                timer: time
-            })
-            if (time === -1) {
-                clearInterval(start)
-                this.nextQuestion()
-            }
-        }, 1000
-        )
+        if(!this.state.winner) {
+            const start = setInterval(() => {
+                let time = this.state.timer
+                time = time - 1
+                this.setState({ 
+                    timer: time
+                })
+                if (time === -1) {
+                    clearInterval(start)
+                    this.nextQuestion()
+                }
+            }, 1000
+            )
+        }
+        
+
+        
+
 //         socket.emit('GET_CURRENT_QUESTION', {gameId: this.props.game.id})
     }
 
     render() {
-        socket.on(`WINNER_${this.props.game.id}`, ({winner}) => {
+        this.socket.on(`WINNER_${this.props.game.id}`, ({winner}) => {
+            this.setState({winner: true})
             this.props.history.push(`/game/winner/${winner.username}`)
         })
         
@@ -69,9 +87,9 @@ class Game extends Component {
         }
         return (
             <div className="container-fluid">
-                                        <div>
-                                <Timer time={this.state.timer}/>
-                            </div>
+                <div>
+                    <Timer time={this.state.timer}/>
+                </div>
                 <div id="login" className="row login-section">
                     <div id="login-section__left" className="col-lg-8 col-md-7 col-sm-8 col-xs-10">
                         <div className="question-section">
@@ -115,4 +133,4 @@ const mapStateToProps = state => ({
     game: state.game
 })
 
-export default withRouter(connect(mapStateToProps, { getQuestions })(Game))
+export default connect(mapStateToProps, { getQuestions })(withRouter(Game))
