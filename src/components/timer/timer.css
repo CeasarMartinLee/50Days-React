@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css?family=Anton');
+
+.timerBox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    margin-top: 10px;
+    margin-left: 20px;
+    align-items: right
+}
+
+.timer {
+    font-size: 6rem;
+    font-family: 'Anton', serif;
+    color: #cb2d3e;
+
+}   
