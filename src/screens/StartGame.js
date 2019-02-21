@@ -4,18 +4,27 @@ import { connect } from 'react-redux'
 import Players from '../components/Players'
 import StartButton from '../components/game/StartButton'
 import Sound from 'react-sound'
-import heartbeat from './heartbeat.mp3'
+import intro from '../components/game/intro.mp3'
+import heartbeat from '../components/game/heartbeat.mp3'
 import io from 'socket.io-client'
 import { API_URL } from '../constants'
 
 class StartGame extends Component {
     state = {
-        playerJoined: false
+        playerJoined: false,
+        url: intro,
+        playStatus: Sound.status.PLAYING
     }
 
     constructor() {
         super()
         this.socket = io(API_URL)
+    }
+
+    handleSongFinishedPlaying = () => {
+        this.setState ({
+            url: heartbeat
+        })
     }
 
     render() {
@@ -36,11 +45,9 @@ class StartGame extends Component {
             <div className="container-fluid">
                 <div>
                     <Sound
-                        url={heartbeat}
-                        playStatus={Sound.status.PLAYING}
-                        playFromPosition={300}
-                        onLoading={this.handleSongLoading}
-                        onPlaying={this.handleSongPlaying}
+                        url={this.state.url}
+                        playStatus={this.state.playStatus}
+                        playFromPosition={0}
                         onFinishedPlaying={this.handleSongFinishedPlaying}
                     />
                 </div>

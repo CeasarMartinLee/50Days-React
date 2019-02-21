@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import CreateButton from '../components/frontpage/CreateButton'
 import JoinButton from '../components/frontpage/JoinButton'
 import './frontpage.css'
-import IntroSound from '../components/frontpage/IntroSound'
 
 
 class FrontPage extends Component {
@@ -28,7 +27,6 @@ class FrontPage extends Component {
             <img src="./img/web-development-png-website-development-company-in-noida-1100.png" alt="front page pic" />
           </div>
         </div>
-        <IntroSound/>
       </div>
     )
 
