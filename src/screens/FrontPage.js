@@ -2,10 +2,11 @@ import React, { Component } from 'react'
 import CreateButton from '../components/frontpage/CreateButton'
 import JoinButton from '../components/frontpage/JoinButton'
 import './frontpage.css'
+import IntroSound from '../components/frontpage/IntroSound'
 
 
 class FrontPage extends Component {
-
+ 
   render() {
     return (
       <div className="container-fluid">
@@ -16,7 +17,7 @@ class FrontPage extends Component {
             </div>
             <form className="join-form">
               <CreateButton />
-              <br/>
+              <br />
               <JoinButton />
             </form>
             <div className="login-footer">
@@ -27,6 +28,7 @@ class FrontPage extends Component {
             <img src="./img/web-development-png-website-development-company-in-noida-1100.png" alt="front page pic" />
           </div>
         </div>
+        <IntroSound/>
       </div>
     )
 
