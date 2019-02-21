@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Sound from 'react-sound'
+// import Sound from 'react-sound'
 import intro from './intro.mp3'
 
 

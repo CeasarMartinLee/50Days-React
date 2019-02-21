@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css?family=Anton');
+
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+.container-fluid {
+  height: 100vh;
+  padding: 0;
+}
+
+
+.section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+#section__left {
+  justify-content: center;
+  padding: 0 10%;
+}
+
+#section__right {
+  background: linear-gradient(to left, #cb2d3e, #ef473a);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+#section__right img {
+  display: block;
+  width: 40%;
+}
+
+.login-btn {
+  background: linear-gradient(to left, #cb2d3e, #ef473a);
+  border-color: transparent;
+}
+
+
+.footer {
+  margin-top: 25%;
+}
+
+
+
+.option-btn {
+  padding: 1rem;
+  margin: 2%;
+  color: white;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 1025px) {
+  #login-section__left {
+    padding: 0 5%;
+  }
+
+  .option-btn {
+    padding: 2rem 1rem;
+  }
+}
+
+@media screen and (max-width: 575px) {
+
+  #front-page {
+    display: flex; 
+  }
+  
+  #front-page > #section__left { order: 2; }
+  #front-page > #section__right { order: 1; }
+
+  #section__right {
+    height: 15vh;
+  }
+
+  #section__right img {
+    width: 25%;
+  }
+
+  #section__left {
+    height: 85vh;
+    padding-top: 13%;
+  }
+
+  .option-btn {
+    padding: 2rem 1rem;
+  }
+
+  .logo p {
+    font-size: 3rem;
+  }
+
+  .buttons {
+    padding: 0 20%;
+  }
+
+  .login-footer img {
+    display: block;
+    width: 30%;
+  }
+
+  .player-list {
+    display: none;
+  }
+
+  .player-list__header {
+    display: none;
+    margin: 0
+  }
+
+  .player-list__header-mobile {
+    display: flex;
+    width: 100%;
+    color: white;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+}
