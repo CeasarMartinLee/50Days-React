@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import './frontpage.css'
 import socket from '../socketio'
 import GameStats from '../components/GameStats';
@@ -21,7 +22,11 @@ class PlayerStation extends Component {
 		
 		socket.on(`CURRENT_QUESTION_${gameId}`, (data) => {
 			this.setState({ question: data.question, questionId: data.id, answer: data.answer, activeQuestion: data.activeId, waitingForOtherPlayers: false})
-		})
+        })
+    }
+
+    componentDidMount() {
+        
     }
     
     onSelect = (answerId) => {
@@ -33,6 +38,12 @@ class PlayerStation extends Component {
     }
 
     render() {
+        socket.on(`DISCONNECT_PLAYER_${this.props.game.id}`, (data) => {
+            if(data.players.findIndex((player) => player.id === this.props.player.id) > -1) {
+                this.props.history.push('/game-over')
+            }
+        })
+
         const letter = [
             'A', 'B', 'C', 'D'
         ]
@@ -50,8 +61,8 @@ class PlayerStation extends Component {
             '<iframe src="https://giphy.com/embed/3o7TKr3nzbh5WgCFxe" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/playboyfragrances-3o7TKr3nzbh5WgCFxe">via GIPHY</a></p>',
             '<iframe src="https://giphy.com/embed/8AdlIamKVYo084YL4H" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/wow-beach-usa-8AdlIamKVYo084YL4H">via GIPHY</a></p>',
             '<iframe src="https://giphy.com/embed/7FgYDJAbeIkUZ4tg2d" width="480" height="269" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/aceventura-jimcarrey-whennaturecalls-shikaka-7FgYDJAbeIkUZ4tg2d">via GIPHY</a></p>',
-
         ]
+        
         return (
             <div className="container-fluid">
                 <div id="login" className="row login-section">
@@ -102,4 +113,4 @@ const mapStateToProps = state => {
 	}
 }
 
-export default connect(mapStateToProps)(PlayerStation)
+export default withRouter(connect(mapStateToProps)(PlayerStation))

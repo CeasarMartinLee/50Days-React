@@ -7,7 +7,8 @@ class GameStats extends Component {
   
   state = {
     scores: [],
-    level: null
+    level: null,
+    disconnected: []
   }
   componentDidMount() {
     request.get(`${API_URL}/games/${this.props.game.id}/stats`).then((result) => {
@@ -31,11 +32,21 @@ class GameStats extends Component {
       const sortedPlayer = players.sort((a, b) => b.currentScore - a.currentScore)
       this.setState({ scores: [...sortedPlayer] })
     })
+
+    socket.on(`DISCONNECT_PLAYER_${this.props.game.id}`, (data) => {
+      this.setState({disconnected: data.players})
+    })
+
     return(
       <div className="rankings">
           <h1>Round {this.state.level && this.state.level}</h1>
           <div className="rankings-list">
-            {this.state.scores.length > 0 && this.state.scores.map((score, index) => <Score key={score.id} index={index} {...score} />)}
+            {this.state.scores.length > 0 && this.state.scores.map((score, index) => 
+              <Score 
+                key={score.id} 
+                index={index} 
+                {...score} 
+                disconnected={this.state.disconnected.findIndex((player) => player.id === score.id) > -1}/>)}
           </div>
       </div>
     )
