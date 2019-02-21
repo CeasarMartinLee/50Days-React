@@ -5,17 +5,11 @@ import socket from '../../socketio'
 import { API_URL } from '../../constants'
 
 const baseUrl = API_URL
-console.log('BASE URL =======>', API_URL)
 
 class Players extends Component {
 
   state = {
     players: []
-  }
-
-  componentWillUnmount() {
-    socket.disconnect()
-    
   }
 
   async componentDidMount() {

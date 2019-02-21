@@ -96,7 +96,7 @@ input[type='number'] {
 }
 
 .players {
-  width: 100%;
+  width: 90%;
   overflow: scroll;
   display: flex;
   flex-direction: column;

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Row, Col} from 'react-bootstrap'
 import Container, {
   ContainerLeft,
   ContainerRight 
@@ -14,18 +15,30 @@ export default (props) => {
       <ContainerLeft>
         <Timer time={timer}/>
         <div className="question">
-            <h3>{question}</h3>
+            <h2 style={{fontWeight: 'bolder'}}>{question}</h2>
         </div>
-        <div className="option-list">
+     
           {answers.length > 0 && (
-            <div>
-              <button className="btn btn-lg option-btn option-A">{answers[0].answer}</button>
-              <button className="btn btn-lg option-btn option-B">{answers[1].answer}</button>
-              <button className="btn btn-lg option-btn option-C">{answers[2].answer}</button>
-              <button className="btn btn-lg option-btn option-D">{answers[3].answer}</button>
-            </div>
+            <Row>
+              <Col style={{display: 'flex', alignItems: 'center', borderBottom: '1px solid gray'}} sm={12}>
+                <button style={{fontSize: '1.5rem', fontWeight: 'bolder'}} className="btn btn-lg option-btn option-A">A</button>
+                <h1 style={{fontWeight: 'bolder'}}>{answers[0].answer}</h1>
+              </Col>
+              <Col style={{display: 'flex', alignItems: 'center', borderBottom: '1px solid gray'}} sm={12}>
+                <button style={{fontSize: '1.5rem', fontWeight: 'bolder'}} className="btn btn-lg option-btn option-B">B</button>
+                <h1 style={{fontWeight: 'bolder'}}>{answers[1].answer}</h1>
+              </Col>
+              <Col style={{display: 'flex', alignItems: 'center', borderBottom: '1px solid gray'}} sm={12}>
+                <button style={{fontSize: '1.5rem', fontWeight: 'bolder'}} className="btn btn-lg option-btn option-C">C</button>
+                <h1 style={{fontWeight: 'bolder'}}>{answers[2].answer}</h1>
+              </Col>
+              <Col style={{display: 'flex', alignItems: 'center', borderBottom: '1px solid gray'}} sm={12}>
+                <button style={{fontSize: '1.5rem', fontWeight: 'bolder'}} className="btn btn-lg option-btn option-D">D</button>
+                <h1 style={{fontWeight: 'bolder'}}>{answers[3].answer}</h1>
+              </Col>
+            </Row>
           )}
-        </div>
+     
         <Footer/>
       </ContainerLeft>
       <ContainerRight>
