@@ -1,0 +1,31 @@
+.game-code-section {
+  display: flex;
+  width: 100%;
+  text-align: center;
+}
+
+.join-btn {
+  background: linear-gradient(to left, #cb2d3e, #ef473a);
+  border-color: transparent;
+}
+
+.join-form {
+  padding: 0 20%;
+}
+
+.button {
+  background: linear-gradient(to left, #cb2d3e, #ef473a);
+  border-color: transparent;
+}
+
+input[type='number'] {
+  text-align: center;
+}
+
+@media screen and (max-width: 575px) {
+
+  .join-form {
+    padding: 0;
+  }
+
+}

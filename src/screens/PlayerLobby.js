@@ -3,7 +3,8 @@ import { authenticatePlayer } from '../actions/game'
 import { connect } from 'react-redux'
 import { withRouter  } from 'react-router-dom'
 import WaitingRoom from '../components/WaitingRoom'
-import socket from '../socketio'
+import io from 'socket.io-client'
+import { API_URL } from '../constants'
 
 
 class PlayerLobbyContainer extends Component {
@@ -12,6 +13,11 @@ class PlayerLobbyContainer extends Component {
     if(this.props.player.isConnectedToGame === false) {
       this.redirect('/')
     }
+  }
+
+  constructor() {
+    super()
+    this.socket = io(API_URL)
   }
 
   async componentDidMount() {
@@ -34,14 +40,14 @@ class PlayerLobbyContainer extends Component {
   }
 
   componentWillUnmount() {
-    socket.disconnect()
+    this.socket.disconnect()
   }
 
   render() {
     const history = this.props.history
     const id = this.props.match.params.id
     
-    socket.on(`GAME_STATUS_CHANGED_${id}`, () => {
+    this.socket.on(`GAME_STATUS_CHANGED_${id}`, () => {
       history.push(`/game/${id}/station`)
     })
     

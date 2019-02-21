@@ -17,7 +17,7 @@ import GameWinner from './screens/GameWinner';
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div>
         <Provider store={store}>
           <Route exact path='/' component={FrontPage}/>
           <Route path='/join' component={JoinGame}/>

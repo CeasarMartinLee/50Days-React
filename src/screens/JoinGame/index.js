@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import JoinGame from '../components/JoinGame'
+import JoinGame from './JoinGame'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
@@ -12,14 +12,9 @@ class JoinGameContainer extends Component {
   }
 
   render() {
-    return (
-      <div className='container-fluid'>
-        <JoinGame/>
-      </div>
-    )
+    return ( <JoinGame/> )
   }
 }
-
 
 const mapStateToProps = state => {
   return {
