@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import request from 'superagent'
+import io from 'socket.io-client'
 import {API_URL} from '../../constants'
 import Score from './Score';
-import socket from '../../socketio'
+
 class GameStats extends Component {
   
   state = {
@@ -10,6 +11,12 @@ class GameStats extends Component {
     level: null,
     disconnected: []
   }
+
+  constructor() {
+    super()
+    this.socket = io(API_URL)
+  }
+
   componentDidMount() {
     request.get(`${API_URL}/games/${this.props.game.id}/stats`).then((result) => {
       this.setState({ scores: result.body, level: this.props.game.level })
@@ -17,15 +24,15 @@ class GameStats extends Component {
   }
 
   componentWillUnmount() {
-    socket.disconnect()
+    this.socket.disconnect()
   }
 
   render() {
-    socket.on(`GAME_LEVEL_UP_${this.props.game.id}`, (level) => {
+    this.socket.on(`GAME_LEVEL_UP_${this.props.game.id}`, (level) => {
       this.setState({ level })
     })
 
-    socket.on(`PLAYER_STAT_UPDATE_${this.props.game.id}`, (playerStat) => {
+    this.socket.on(`PLAYER_STAT_UPDATE_${this.props.game.id}`, (playerStat) => {
       let players = this.state.scores.map(player => {
         if (player.id === playerStat.playerId) {
           player.currentScore = playerStat.score
@@ -37,7 +44,7 @@ class GameStats extends Component {
       this.setState({ scores: [...sortedPlayer] })
     })
 
-    socket.on(`DISCONNECT_PLAYER_${this.props.game.id}`, (data) => {
+    this.socket.on(`DISCONNECT_PLAYER_${this.props.game.id}`, (data) => {
       this.setState({disconnected: data.players})
     })
 
