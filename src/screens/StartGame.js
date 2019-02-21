@@ -5,8 +5,19 @@ import Players from '../components/Players'
 import StartButton from '../components/game/StartButton'
 import Sound from 'react-sound'
 import heartbeat from './heartbeat.mp3'
+import io from 'socket.io-client'
+import { API_URL } from '../constants'
 
 class StartGame extends Component {
+    state = {
+        playerJoined: false
+    }
+
+    constructor() {
+        super()
+        this.socket = io(API_URL)
+    }
+
     render() {
 
         if (!this.props.game) {
@@ -14,6 +25,11 @@ class StartGame extends Component {
                 <div> GENERATING CODE</div>
             )
         }
+
+        this.socket.on(`PLAYER_JOINED_${this.props.game.id}`, (result) => {
+            console.log(result, 'PLAYER JOINED')
+            this.setState({ playerJoined: true })
+        })
 
         return (
 
@@ -34,9 +50,9 @@ class StartGame extends Component {
                             <p>{this.props.game.code}</p>
                             <label>Use 4 digit code to join the game</label>
                         </div>
-                        <form className="join-form">
-                            <StartButton props={this.props.game} />
-                        </form>
+                        <div className="join-form">
+                            {this.state.playerJoined && <StartButton props={this.props.game} />}
+                        </div>
                         <div className="login-footer">
                             <img src="https://codaisseur.com/assets/webpack-assets/codaisseur-logo-colore1b2f1695e1af08537a8ccb15598cf7f.svg" alt="codaisseur logo" />
                         </div>

@@ -40,7 +40,10 @@ class Game extends Component {
     }
     
     componentDidMount() {
-        this.socket.emit('GET_CURRENT_QUESTION', {gameId: this.props.game.id})
+        setTimeout(() => {
+            this.socket.emit('GET_CURRENT_QUESTION', {gameId: this.props.game.id})
+        }, 1000)
+
         setTimeout (() => {this.startCountDown()}, 2000)
     }
 
@@ -49,7 +52,7 @@ class Game extends Component {
         this.setState({ 
             timer: 10
         })
-        setTimeout (() => {this.startCountDown()}, 2000)
+        setTimeout (() => {this.startCountDown()}, 1000)
     }
 
     startCountDown = () => {
@@ -64,14 +67,10 @@ class Game extends Component {
                     clearInterval(start)
                     this.nextQuestion()
                 }
-            }, 1000
+            }, 900
             )
         }
         
-
-        
-
-//         socket.emit('GET_CURRENT_QUESTION', {gameId: this.props.game.id})
     }
 
     render() {
@@ -111,9 +110,7 @@ class Game extends Component {
                                 )}
                                 
                             </div>
-                            <div>
-                                <br/><button onClick={this.nextQuestion}>NEXT</button>
-                            </div>
+                        
                             <div className="login-footer">
                                 <img src="https://codaisseur.com/assets/webpack-assets/codaisseur-logo-colore1b2f1695e1af08537a8ccb15598cf7f.svg" alt="codaisseur logo" />
                             </div> 
