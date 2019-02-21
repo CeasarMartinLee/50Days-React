@@ -2,16 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import io from 'socket.io-client'
-
 import { getQuestions } from '../../actions/questions'
-import GameStats from '../../components/GameStats'
-// import Timer from '../components/timer/timer'
 import { API_URL } from '../../constants'
-import Container, { ContainerLeft, ContainerRight } from '../../components/Container'
-import Footer from '../../components/Footer'
 import Game from './Game'
-
-// import './style.css'
 
 class GameContainer extends Component {
 
@@ -20,7 +13,7 @@ class GameContainer extends Component {
 		question: null,
     answer: [],
     activeQuestion: null,
-    timer: 10,
+    timer: 15,
     winner: false
   }
     
@@ -51,7 +44,7 @@ class GameContainer extends Component {
   nextQuestion = () => {
     this.socket.emit('NEXT_QUESTION', {gameId: this.props.game.id, activeQuestionId: this.state.activeQuestion})
     this.setState({ 
-        timer: 10
+        timer: 15
     })
     setTimeout (() => {this.startCountDown()}, 1000)
   }
