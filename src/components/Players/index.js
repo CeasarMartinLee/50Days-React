@@ -13,6 +13,10 @@ class Players extends Component {
     players: []
   }
 
+  componentWillUnmount() {
+    socket.disconnect()
+  }
+
   async componentDidMount() {
 
     const url = `${baseUrl}/game/${this.props.game.id}/players`

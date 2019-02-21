@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getQuestions } from '../actions/questions'
-import io from 'socket.io-client'
-import {API_URL } from '../constants'
 import './frontpage.css'
 import GameStats from '../components/GameStats';
+import { withRouter } from 'react-router-dom'
+import socket from '../socketio'
 
 class Game extends Component {
 
@@ -14,30 +14,29 @@ class Game extends Component {
         answer: [],
         activeQuestion: null
 	}
-
-	constructor() {
-        super()
-        this.socket = io(API_URL)
-	}
 	
 	componentWillMount() {
 		const gameId = this.props.game.id
-		this.socket.on(`CURRENT_QUESTION_${gameId}`, (data) => {
+		socket.on(`CURRENT_QUESTION_${gameId}`, (data) => {
 			this.setState({ question: data.question, questionId: data.id, answer: data.answer, activeQuestion: data.activeId})
 		})
 	}
     
+    componentWillUnmount() {
+        socket.disconnect()
+    }
+    
     componentDidMount() {
-        this.socket.emit('GET_CURRENT_QUESTION', {gameId: this.props.game.id})
+        socket.emit('GET_CURRENT_QUESTION', {gameId: this.props.game.id})
     }
 
     nextQuestion = () => {
-        this.socket.emit('NEXT_QUESTION', {gameId: this.props.game.id, activeQuestionId: this.state.activeQuestion})
+        socket.emit('NEXT_QUESTION', {gameId: this.props.game.id, activeQuestionId: this.state.activeQuestion})
     }
 
     render() {
-        this.socket.on(`WINNER_${this.props.game.id}`, (winner) => {
-            console.log('THERE IS A WINNER', winner)
+        socket.on(`WINNER_${this.props.game.id}`, ({winner}) => {
+            this.props.history.push(`/game/winner/${winner.username}`)
         })
         
         if (!this.state) {
@@ -70,9 +69,9 @@ class Game extends Component {
                             <div>
                                 <br/><button onClick={this.nextQuestion}>NEXT</button>
                             </div>
-                            {/* <div className="login-footer">
+                            <div className="login-footer">
                                 <img src="https://codaisseur.com/assets/webpack-assets/codaisseur-logo-colore1b2f1695e1af08537a8ccb15598cf7f.svg" alt="codaisseur logo" />
-                            </div> */}
+                            </div> 
                         </div>
                     </div>
                     <div id="login-section__right" className="col-lg-4 col-md-5 col-sm-4 col-xs-2">
@@ -89,4 +88,4 @@ const mapStateToProps = state => ({
     game: state.game
 })
 
-export default connect(mapStateToProps, { getQuestions })(Game)
+export default withRouter(connect(mapStateToProps, { getQuestions })(Game))
