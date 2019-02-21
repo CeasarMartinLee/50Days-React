@@ -7,6 +7,7 @@
 }
 .container-fluid {
   height: 100vh;
+  padding: 0;
 }
 
 .login-section {
@@ -95,7 +96,7 @@ input[type='number'] {
 }
 
 .players {
-  width: 100%;
+  width: 90%;
   overflow: scroll;
   display: flex;
   flex-direction: column;
