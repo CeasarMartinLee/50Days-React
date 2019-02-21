@@ -33,6 +33,10 @@ class PlayerLobbyContainer extends Component {
     this.props.history.push(path)
   }
 
+  componentWillUnmount() {
+    socket.disconnect()
+  }
+
   render() {
     const history = this.props.history
     const id = this.props.match.params.id

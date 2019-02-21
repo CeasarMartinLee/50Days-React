@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getQuestions } from '../actions/questions'
-import io from 'socket.io-client'
-import {API_URL } from '../constants'
 import './frontpage.css'
 import GameStats from '../components/GameStats';
 import { withRouter } from 'react-router-dom'
+import socket from '../socketio'
 
 class Game extends Component {
 
@@ -15,29 +14,28 @@ class Game extends Component {
         answer: [],
         activeQuestion: null
 	}
-
-	constructor() {
-        super()
-        this.socket = io(API_URL)
-	}
 	
 	componentWillMount() {
 		const gameId = this.props.game.id
-		this.socket.on(`CURRENT_QUESTION_${gameId}`, (data) => {
+		socket.on(`CURRENT_QUESTION_${gameId}`, (data) => {
 			this.setState({ question: data.question, questionId: data.id, answer: data.answer, activeQuestion: data.activeId})
 		})
 	}
     
+    componentWillUnmount() {
+        socket.disconnect()
+    }
+    
     componentDidMount() {
-        this.socket.emit('GET_CURRENT_QUESTION', {gameId: this.props.game.id})
+        socket.emit('GET_CURRENT_QUESTION', {gameId: this.props.game.id})
     }
 
     nextQuestion = () => {
-        this.socket.emit('NEXT_QUESTION', {gameId: this.props.game.id, activeQuestionId: this.state.activeQuestion})
+        socket.emit('NEXT_QUESTION', {gameId: this.props.game.id, activeQuestionId: this.state.activeQuestion})
     }
 
     render() {
-        this.socket.on(`WINNER_${this.props.game.id}`, ({winner}) => {
+        socket.on(`WINNER_${this.props.game.id}`, ({winner}) => {
             this.props.history.push(`/game/winner/${winner.username}`)
         })
         

@@ -25,8 +25,8 @@ class PlayerStation extends Component {
         })
     }
 
-    componentDidMount() {
-        
+    componentWillUnmount() {
+        socket.disconnect()
     }
     
     onSelect = (answerId) => {

@@ -16,6 +16,10 @@ class GameStats extends Component {
     })
   }
 
+  componentWillUnmount() {
+    socket.disconnect()
+  }
+
   render() {
     socket.on(`GAME_LEVEL_UP_${this.props.game.id}`, (level) => {
       this.setState({ level })
