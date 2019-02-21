@@ -1,6 +1,6 @@
 import React from 'react'
-import CreateButton from '../../components/frontpage/CreateButton'
-import JoinButton from '../../components/frontpage/JoinButton'
+import CreateButton from '../../components/Buttons/CreateButton'
+import JoinButton from '../../components/Buttons/JoinButton'
 import IntroSound from '../../components/frontpage/IntroSound'
 import Container, { ContainerLeft, ContainerRight } from '../../components/Container'
 import './style.css'
@@ -15,7 +15,7 @@ export default () => {
       <ContainerLeft>
         <Logo/>
         <section className='buttons'>
-          <CreateButton />
+          <CreateButton/>
           <br />
           <JoinButton />
         </section>
