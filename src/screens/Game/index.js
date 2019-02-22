@@ -33,39 +33,7 @@ class GameContainer extends Component {
     this.socket.disconnect()
   }
     
-  componentDidMount() {
-    setTimeout(() => {
-        this.socket.emit('GET_CURRENT_QUESTION', {gameId: this.props.game.id})
-    }, 1000)
-
-    setTimeout (() => {this.startCountDown()}, 2000)
-  }
-
-  nextQuestion = () => {
-    this.socket.emit('NEXT_QUESTION', {gameId: this.props.game.id, activeQuestionId: this.state.activeQuestion})
-    this.setState({ 
-        timer: 15
-    })
-    setTimeout (() => {this.startCountDown()}, 1000)
-  }
-
-  startCountDown = () => {
-    if(!this.state.winner) {
-        const start = setInterval(() => {
-            let time = this.state.timer
-            time = time - 1
-            this.setState({ 
-                timer: time
-            })
-            if (time === -1) {
-                clearInterval(start)
-                this.nextQuestion()
-            }
-        }, 900
-        )
-    }
-  }
-
+  
   render() {
 
     console.log(this.state.answer, 'HUHU')
@@ -86,6 +54,7 @@ class GameContainer extends Component {
         answers={this.state.answer} 
         game={this.props.game} 
         timer={this.state.timer}
+        activeQuestion={this.state.activeQuestion}
       />
     )
   }
@@ -96,3 +65,40 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps, { getQuestions })(withRouter(GameContainer))
+
+
+// componentDidMount() {
+//   setTimeout(() => {
+//       this.socket.emit('GET_CURRENT_QUESTION', {gameId: this.props.game.id})
+//   }, 1000)
+
+//   setTimeout (() => {this.startCountDown()}, 2000)
+// }
+
+// nextQuestion = () => {
+//   this.socket.emit('NEXT_QUESTION', {gameId: this.props.game.id, activeQuestionId: this.state.activeQuestion})
+//   this.setState({ 
+//       timer: 15
+//   })
+//   setTimeout (() => {this.startCountDown()}, 1000)
+// }
+
+// startCountDown = () => {
+//   let time = this.state.timer
+
+//   if(!this.state.winner) {
+//       const start = setInterval(() => {
+//           let time = this.state.timer
+//           time = time - 1
+//           // this.setState({ 
+//           //     timer: time
+//           // })
+//           if (time === -1) {
+//               clearInterval(start)
+//               this.nextQuestion()
+//           }
+//       }, 900
+//       )
+//   }
+// }
+

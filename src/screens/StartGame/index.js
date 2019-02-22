@@ -26,18 +26,13 @@ class StartGameContainer extends Component {
   }
 
   render() {
-
-    this.socket.on(`PLAYER_JOINED_${this.props.game.id}`, (result) => {
-      this.setState({ playerJoined: true })
-    })
-
-    if (!this.props.game) {
+    if (!this.props.game.id) {
       return (
           <div> GENERATING CODE....</div>
       )
     }
 
-    return (<StartGame playerJoined={this.state.playerJoined} game={this.props.game} url={this.state.url}/>)
+    return (<StartGame playerJoined={true} game={this.props.game} url={this.state.url}/>)
   }
 }
 
