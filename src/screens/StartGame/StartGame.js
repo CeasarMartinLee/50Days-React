@@ -30,6 +30,13 @@ const StartGame =  (props) => {
       <ContainerRight>
         {game.id && <Players game={game} />}
       </ContainerRight>
+
+      <Sound
+        url={url}
+        playStatus={Sound.status.PLAYING}
+        playFromPosition={0}
+        onFinishedPlaying={handleSongFinishedPlaying}
+      />
      
     </Container>
   )
@@ -44,9 +51,3 @@ StartGame.propTypes = {
 
 export default StartGame
 
-// <Sound
-// url={url}
-// playStatus={Sound.status.PLAYING}
-// playFromPosition={0}
-// onFinishedPlaying={handleSongFinishedPlaying}
-// />
