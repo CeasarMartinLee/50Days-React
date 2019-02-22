@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import Player from './Player'
-import socket from '../../socketio'
 import { API_URL } from '../../constants'
 import io from 'socket.io-client'
+import axios from 'axios'
 
 const baseUrl = API_URL
 
@@ -15,6 +15,14 @@ class Players extends Component {
   constructor() {
     super()
     this.socket = io(API_URL)
+  }
+
+  componentWillMount() {
+    axios.get(`${API_URL}/game/${this.props.game.id}/players`).then((players) => {
+      if(players.data) {
+        this.setState({players: [...players.data]})
+      }
+    })
   }
 
   render() {
