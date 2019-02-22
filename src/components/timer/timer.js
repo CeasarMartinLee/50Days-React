@@ -11,7 +11,7 @@ class Timer extends Component {
     state = {
         sound: tickingClock,
         position: 9000,
-        timer: 15
+        timer: 15,
     }   
 
     componentDidMount() {
@@ -23,7 +23,7 @@ class Timer extends Component {
     }
 
     startCountDown = () => {
-        if(!this.state.winner) {
+        if(!this.props.winner) {
             const start = setInterval(() => {
                 let time = this.state.timer
                 time = time - 1

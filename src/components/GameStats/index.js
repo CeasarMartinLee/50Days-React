@@ -21,6 +21,28 @@ class GameStats extends Component {
     request.get(`${API_URL}/games/${this.props.game.id}/stats`).then((result) => {
       this.setState({ scores: result.body, level: this.props.game.level })
     })
+
+    this.socket.on(`PLAYER_STAT_UPDATE_${this.props.game.id}`, (playerStat) => {
+      console.log(`*******ON UPDATE`)
+      let isChanged = false
+      let players = this.state.scores.map(player => {
+        if (player.id === playerStat.playerId) {
+          if(player.currentScore !== playerStat.score) {
+            player.currentScore = playerStat.score
+            isChanged = true
+          }
+         
+        }
+        return player
+      })
+
+      if(isChanged) {
+        const sortedPlayer = players.sort((a, b) => b.currentScore - a.currentScore)
+        this.setState({ scores: [...sortedPlayer] })
+      }
+
+      
+    })
   }
 
   componentWillUnmount() {
@@ -32,17 +54,7 @@ class GameStats extends Component {
       this.setState({ level })
     })
 
-    this.socket.on(`PLAYER_STAT_UPDATE_${this.props.game.id}`, (playerStat) => {
-      let players = this.state.scores.map(player => {
-        if (player.id === playerStat.playerId) {
-          player.currentScore = playerStat.score
-        }
-        return player
-      })
-
-      const sortedPlayer = players.sort((a, b) => b.currentScore - a.currentScore)
-      this.setState({ scores: [...sortedPlayer] })
-    })
+    
 
     this.socket.on(`DISCONNECT_PLAYER_${this.props.game.id}`, (data) => {
       this.setState({disconnected: data.players})

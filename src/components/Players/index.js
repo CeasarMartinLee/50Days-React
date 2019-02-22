@@ -12,10 +12,6 @@ class Players extends Component {
     players: []
   }
 
-  async componentDidMount() {
-    const url = `${baseUrl}/game/${this.props.game.id}/players`
-  }
-
   constructor() {
     super()
     this.socket = io(API_URL)

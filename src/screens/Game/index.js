@@ -55,6 +55,7 @@ class GameContainer extends Component {
         game={this.props.game} 
         timer={this.state.timer}
         activeQuestion={this.state.activeQuestion}
+        winner={this.state.winner}
       />
     )
   }

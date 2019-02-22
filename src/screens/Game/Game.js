@@ -9,11 +9,11 @@ import Timer from '../../components/timer/timer'
 import GameStats from '../../components/GameStats'
 
 export default (props) => {
-  const { question, answers, game, timer, activeQuestion } = props
+  const { question, answers, game, timer, activeQuestion, winner } = props
   return (
     <Container>
       <ContainerLeft>
-        <Timer time={timer} activeQuestion={activeQuestion} game={game}/>
+        <Timer time={timer} activeQuestion={activeQuestion} game={game} winner={winner}/>
         <div className="question">
             <h2 style={{fontWeight: 'bolder'}}>{question}</h2>
         </div>
