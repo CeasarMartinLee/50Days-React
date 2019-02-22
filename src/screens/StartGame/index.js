@@ -37,7 +37,7 @@ class StartGameContainer extends Component {
       )
     }
 
-    return (<StartGame playerJoined={this.state.playerJoined || true} game={this.props.game} url={this.state.url}/>)
+    return (<StartGame playerJoined={this.state.playerJoined} game={this.props.game} url={this.state.url}/>)
   }
 }
 
