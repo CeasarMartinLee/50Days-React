@@ -13,9 +13,13 @@ const StartGame =  (props) => {
   return (
     <Container>
       <ContainerLeft>
+        <section style={{textAlign: 'center'}}>
+          <img src='./img/50Days.png' alt='QR code'/>
+          <h3>https://bit.ly/2tzFZ8B</h3>
+        </section>
         <section className="logo">
           <p>{game.code}</p>
-          <label>Use 4 digit code to join the game</label>
+          <label>Use this digit code to join the game</label>
         </section>
         <section>
           {playerJoined && <StartButton props={game} />}
