@@ -1,1 +1,1 @@
-export const API_URL = 'https://codaisseur-50days.herokuapp.com/' || 'http://localhost:3000'
+export const API_URL = 'https://codaisseur-50days.herokuapp.com' || 'http://localhost:3000'
