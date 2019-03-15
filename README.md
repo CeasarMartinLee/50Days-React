@@ -1,68 +1,77 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+# 50-DAYS
+## [Check out the deployed version here!](https://dog-quiz.netlify.com)
+## What this project is about
 
-In the project directory, you can run:
+50-DAYS is a multiplayer game-based learning platform, that can be used by students and developers to enhance their javascript knowledge.  This was developed by Mayron van Leenden (https://www.linkedin.com/in/mvanleenden/) and Ceasar Martin Lee (https://www.linkedin.com/in/ceasar-martin-lee-a0a079b5/) for Codaisseur Academy (https://codaisseur.com/)
 
-### `npm start`
+For more info why we are doing this checkout: **[Goals for this project](#goals-for-this-project)** 
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Table of contents:
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+- **[Technologies used](#technologies-used)**
+- **[Goals for this project](#goals-for-this-project)**
+- **[Requirements briefing](#requirements)**
+- **[Features built so far overview with pull requests](#features-built-so-far-overview-with-pull-requests)**
+- **[My git workflow](#my-git-workflow)**
+- **[My agile workflow and trello board](#my-agile-workflow-and-trello-board)**
+- **[create-react-app-docs](#create-react-app)**
 
-### `npm test`
+## Technologies used
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### 👀👇 Click links to view some samples in this project 👇👀
 
-### `npm run build`
+- **[react](./src/containers/Game.js)**  
+- **[redux](./src/reducers/question.js)**  
+- **[redux-thunk](./src/actions/api.js)**  
+- **[jest](./src/tests/questionReducer.test.js)**  
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Goals for this project:
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+- To practice for myself
+- To make an example for the students to see how they could have tackled the project.
+- **[To showcase disciplined git usage](#my-git-workflow)**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Requirements
 
-### `npm run eject`
+Checkout out: **[requirements.md](./requirements.md)**
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Features built so far overview with pull requests
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### 👀👇 Click links to view the pull requests 👇👀
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- **[Feat/display random dog image](https://github.com/Reinoptland/dog-quiz/pull/2)**
+- **[Feat/next question](https://github.com/Reinoptland/dog-quiz/pull/5)**
+- **[Feat/feedback on incorrect](https://github.com/Reinoptland/dog-quiz/pull/7)**
+- **[Bugfix/disable buttons on choice](https://github.com/Reinoptland/dog-quiz/pull/11)**
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## My git workflow
 
-## Learn More
+In this project I try to use:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Good commit messages
+- Well named branches
+- Pull requests with summaries
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
+Here is my branching model for this project.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+```
+master (auto deploys) ______________________
+                       \               /
+development             \_____________/- pull request
+                         \           /
+feature/some-feature      \_commits_/- pull request
+```
 
-### Analyzing the Bundle Size
+## My agile workflow and Trello board
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+I try to maintain a backlog eventhough I'm working on a project by myself. That way people can quickly jump in and start helping out. It also displays how I split up my tasks and try to build this project in an iterative and incremental way!
 
-### Making a Progressive Web App
+**[Check out my trelloboard here](https://trello.com/b/3gqJHfb6/dog-quiz)**
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+## Create React App
 
-### Advanced Configuration
+This project was scaffolded using the create-react-app cli. 
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+**[The standard create-react-app docs can be found in here](./create-react-app-docs.md)**
